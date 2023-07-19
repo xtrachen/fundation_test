@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import 'iconDialog.dart';
+import 'pinkLinearButton.dart';
+
 void main() {
   // runApp(const MyApp());
   runApp(const GetMaterialApp(home: MyApp()));
@@ -86,7 +89,7 @@ class _MyHomePageState extends State<MyHomePage> {
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
         // Here we take the value from the MyHomePage object that was created by
         // the App.build method, and use it to set our appbar title.
-        title: Text(widget.title),
+        title: Text("test"),
       ),
       body: Center(
         // Center is a layout widget. It takes a single child and positions it
@@ -114,13 +117,15 @@ class _MyHomePageState extends State<MyHomePage> {
               '$_counter',
               style: Theme.of(context).textTheme.headlineMedium,
             ),
+            SizedBox(height: 50, width: 200,child: PinkLinearButton(onTap: (){},title: "dfdfdfd",fontsize: 20))
           ],
         ),
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           _incrementCounter();
-          Get.bottomSheet(_bottomSheetContainer());
+          // Get.bottomSheet(_bottomSheetContainer());
+          Get.dialog(const IconDialog(title: "主标题",detail: "这里是副标题文本",confirmStr: "确定"));
           // Get.defaultDialog(title: "im a dialog");
         },
         tooltip: 'Increment',

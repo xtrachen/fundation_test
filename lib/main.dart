@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 import 'iconDialog.dart';
 import 'pinkLinearButton.dart';
 
 import 'package:flash/flash.dart';
 
-
+import 'package:expandable_page_view/expandable_page_view.dart';
 
 void main() {
   // runApp(const MyApp());
@@ -66,6 +67,8 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   int _counter = 0;
 
+  late PageController pageController;
+
   void _incrementCounter() {
     setState(() {
       // This call to setState tells the Flutter framework that something has
@@ -85,28 +88,102 @@ class _MyHomePageState extends State<MyHomePage> {
     // The Flutter framework has been optimized to make rerunning build methods
     // fast, so that you can just rebuild anything that needs updating rather
     // than having to individually change instances of widgets.
-    return _buildNestedScrollView();
+    // return _buildNestedScrollView();
+    return Scaffold(
+        appBar: AppBar(
+          title: const Text("hahahah"),
+        ),
+        body: SizedBox(
+            width: double.infinity,
+            height: double.infinity,
+            child: Stack(
+              children: [
+                Positioned(
+                    top: 60,
+                    left: 40,
+                    right: 40,
+                    height: 400,
+                    child: Container(
+                        width: double.infinity,
+                        height: double.infinity,
+                        color: Colors.lime,
+                        child: _pageView())),
+                Positioned(
+                    top: 420,
+                    left: 80,
+                    right: 80,
+                    height: 20,
+                    child: Center(child: SmoothPageIndicator(
+                        controller: pageController,
+                        count: 4,
+                        effect: WormEffect())))
+              ],
+            )));
   }
 
- _buildNestedScrollView(){
+  Widget _galleryView() {
+    return ExpandablePageView(children: [
+      SizedBox(child: Center(child: Text("dfsadfasdfasdfasdfasd"))),
+      SizedBox(child: Center(child: Text("dfsadfasdfasdfasdfasd"))),
+      SizedBox(child: Center(child: Text("dfsadfasdfasdfasdfasd")))
+    ]);
+  }
+
+  Widget _pageView() {
+    var pageView = PageView(
+      scrollDirection: Axis.horizontal,
+      children: [
+        Container(color: Colors.green),
+        Container(color: Colors.lime),
+        Container(color: Colors.purple),
+        Container(color: Colors.orange),
+      ],
+    );
+
+    pageController = pageView.controller;
+    return pageView;
+  }
+
+  Widget _buildNestedScrollView() {
     return NestedScrollView(
-        headerSliverBuilder: (BuildContext context,bool innerBoxIsScrolled){
+        headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
           return [
-            const SliverAppBar(title: Text('导航测试'),)
+            SliverAppBar(
+              expandedHeight: 230,
+              title: const Text('导航测试'),
+              pinned: true,
+              flexibleSpace: FlexibleSpaceBar(
+                  background: Stack(
+                children: [
+                  Positioned(
+                      bottom: 0,
+                      left: 0,
+                      right: 0,
+                      height: 180,
+                      child: InkWell(
+                          onTap: () {},
+                          child: Image.network(
+                              "http://img.haote.com/upload/20180918/2018091815372344164.jpg",
+                              fit: BoxFit.cover)))
+                ],
+              )),
+            )
           ];
         },
-        body: ListView.builder(itemBuilder: (BuildContext context,int index){
-          return Container(
-            height: 120,
-            color: Colors.primaries[index%Colors.primaries.length],
-            alignment: Alignment.center,
-            child: Text(
-              '组合ListView $index',
-              style: const TextStyle(color: Colors.white,fontSize: 30),
-            ),
-          );
-        }));
+        body: MediaQuery.removePadding(
+            removeTop: true,
+            context: context,
+            child: ListView.builder(
+                itemBuilder: (BuildContext context, int index) {
+              return Container(
+                height: 120,
+                color: Colors.primaries[index % Colors.primaries.length],
+                alignment: Alignment.center,
+                child: Text(
+                  '组合ListView $index',
+                  style: const TextStyle(color: Colors.white, fontSize: 30),
+                ),
+              );
+            })));
   }
-
-
 }

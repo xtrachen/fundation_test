@@ -121,7 +121,7 @@ class _MyHomePageState extends State<MyHomePage> {
               ],
             )),
             floatingActionButton: FloatingActionButton(onPressed: (){
-              Get.to(const BuyPage());
+              Get.to(BuyPage());
             },child:const Center(child: Icon(Icons.car_crash)),),
             );
   }

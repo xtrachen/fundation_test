@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
+import 'buyPage.dart';
 import 'iconDialog.dart';
 import 'pinkLinearButton.dart';
 
@@ -112,21 +113,17 @@ class _MyHomePageState extends State<MyHomePage> {
                     top: 420,
                     left: 80,
                     right: 80,
-                    height: 20,
+                    height: 8,
                     child: Center(child: SmoothPageIndicator(
                         controller: pageController,
                         count: 4,
                         effect: WormEffect())))
               ],
-            )));
-  }
-
-  Widget _galleryView() {
-    return ExpandablePageView(children: [
-      SizedBox(child: Center(child: Text("dfsadfasdfasdfasdfasd"))),
-      SizedBox(child: Center(child: Text("dfsadfasdfasdfasdfasd"))),
-      SizedBox(child: Center(child: Text("dfsadfasdfasdfasdfasd")))
-    ]);
+            )),
+            floatingActionButton: FloatingActionButton(onPressed: (){
+              Get.to(const BuyPage());
+            },child:const Center(child: Icon(Icons.car_crash)),),
+            );
   }
 
   Widget _pageView() {

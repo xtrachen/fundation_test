@@ -130,11 +130,24 @@ class _BuyPageState extends State<BuyPage> {
                           clipBehavior: Clip.hardEdge,
                           decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(5),
-                              color: Colors.grey),
+                              color: const Color.fromRGBO(51, 51, 51, 1)),
                           width: double.infinity,
                           height: double.infinity,
                           child: const Stack(
-                            children: [],
+                            children: [
+                              Positioned(
+                                top: 10,left: 10,right: 10,height: 32,
+                                  child: Text(
+                                'dsfsdfasdfasdf',
+                                style: TextStyle(
+                                    fontSize: 28,
+                                    color:
+                                         Color.fromRGBO(235, 190, 194, 1),
+                                    fontWeight: FontWeight.bold),
+                                textAlign: TextAlign.center,
+                              )),
+                              Positioned(top:46,left: 10,right: 10,height: 20,child: Text('sfasdfads     dfsdfsfds    fdsfsdfsfs',textAlign: TextAlign.center,style: TextStyle(fontSize: 16,color: Color.fromRGBO(235, 190, 194, 1)),))
+                            ],
                           ))));
             }));
   }

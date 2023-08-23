@@ -91,40 +91,54 @@ class _MyHomePageState extends State<MyHomePage> {
     // than having to individually change instances of widgets.
     // return _buildNestedScrollView();
     return Scaffold(
-        appBar: AppBar(
-          title: const Text("hahahah"),
-        ),
-        body: SizedBox(
-            width: double.infinity,
-            height: double.infinity,
-            child: Stack(
-              children: [
-                Positioned(
-                    top: 60,
-                    left: 40,
-                    right: 40,
-                    height: 400,
-                    child: Container(
-                        width: double.infinity,
-                        height: double.infinity,
-                        color: Colors.lime,
-                        child: _pageView())),
-                Positioned(
-                    top: 420,
-                    left: 80,
-                    right: 80,
-                    height: 8,
-                    child: Center(child: SmoothPageIndicator(
-                        controller: pageController,
-                        count: 4,
-                        effect: WormEffect())))
-              ],
-            )),
-            floatingActionButton: FloatingActionButton(onPressed: (){
-              Get.to(BuyPage());
-            },child:const Center(child: Icon(Icons.car_crash)),),
-            );
+      appBar: AppBar(
+        title: const Text("hahahah"),
+      ),
+      body: SizedBox(
+          width: double.infinity,
+          height: double.infinity,
+          child: Stack(
+            children: [
+              Positioned(
+                  top: 60,
+                  left: 40,
+                  right: 40,
+                  height: 400,
+                  child: Container(
+                      width: double.infinity,
+                      height: double.infinity,
+                      color: Colors.lime,
+                      child: _pageView())),
+              Positioned(
+                  top: 420,
+                  left: 80,
+                  right: 80,
+                  height: 8,
+                  child: Center(
+                      child: SmoothPageIndicator(
+                          controller: pageController,
+                          count: 4,
+                          effect: WormEffect()))),
+              Positioned(
+                  left: 10,
+                  top: 10,
+                  width: 300,
+                  height: 300,
+                  child: Container(
+                    color: Colors.orange,
+                    child:AnimationRoute()
+                  ))
+            ],
+          )),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          Get.to(BuyPage());
+        },
+        child: const Center(child: Icon(Icons.car_crash)),
+      ),
+    );
   }
+
 
   Widget _pageView() {
     var pageView = PageView(
@@ -182,5 +196,49 @@ class _MyHomePageState extends State<MyHomePage> {
                 ),
               );
             })));
+  }
+}
+
+
+
+class AnimationRoute extends StatefulWidget {
+  @override
+  AnimationRouteState createState() => AnimationRouteState();
+}
+ 
+class AnimationRouteState extends State<AnimationRoute> with SingleTickerProviderStateMixin {
+ 
+  late Animation<double> animation;
+  late AnimationController controller;
+ 
+  initState() {
+    super.initState();
+    // Controller设置动画时长
+    // vsync设置一个TickerProvider，当前State 混合了SingleTickerProviderStateMixin就是一个TickerProvider
+    controller = AnimationController(
+        duration: Duration(seconds: 1),
+        vsync: this //
+    );
+    // Tween设置动画的区间值，animate()方法传入一个Animation，AnimationController继承Animation
+    animation = new Tween(begin: 0.0, end: 40.0).animate(controller);
+    controller.repeat(reverse: true);
+//    controller.repeat(reverse: true);
+  }
+ 
+  @override
+  Widget build(BuildContext context) {
+    return AnimatedBuilder(
+        animation: animation,
+        builder: (ctx, child) {
+          return Stack(children: [Positioned(left: 80+animation.value,top: 100,width: 100,height: 100,child: Container(color: Colors.green))]);
+        }
+    );
+  }
+ 
+  @override
+  void dispose() {
+    // 释放资源
+    controller.dispose();
+    super.dispose();
   }
 }
